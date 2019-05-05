@@ -59,13 +59,13 @@ git commit -m "ADD: build system for Travis CI"
 # install deploy key
 # -----------------------------------------------------------------------------
 # add deploy key to https://github.com/<user>/<repo>/settings/keys
-# cat ./drone/.ssh/id_rsa.pub | pbcopy
+cat ./drone/.ssh/id_rsa.pub | pbcopy
 
 ```
 
 ## Additional config
 
-Add specific branches:
+Configure branches
 
 ```diff
     ...
