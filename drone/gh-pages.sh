@@ -87,6 +87,7 @@ eval `ssh-agent -s`
 openssl aes-256-cbc -md md5 -d -in "$ROOT_DIR/drone/.ssh/id_rsa.enc" -pass "pass:$DECRYPT_KEY" | ssh-add -
 
 # add github as known host
+mkdir -p ~/.ssh
 ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
 # Now that we're all set up, we can push.
