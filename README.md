@@ -25,25 +25,26 @@ curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/drone/gh-pages
 
 # generate the symmetric 256 bit key:
 # openssl rand -hex -out secret.key 64
-openssl rand -hex 64 | tr -d '\n' > secret.key
+openssl rand -hex 64 | tr -d '\n' > ./drone/.ssh/secret.key
 
 
 # Encrypt file using key - md5 set to have openssl 1 & 2 compatibility
-openssl aes-256-cbc -md md5 -in ./drone/.ssh/id_rsa -out ./drone/.ssh/id_rsa.enc -pass file:secret.key
+openssl aes-256-cbc -md md5 -in ./drone/.ssh/id_rsa -out ./drone/.ssh/id_rsa.enc -pass file:./drone/.ssh/secret.key
 
 # copy key to clipboard
-cat secret.key | pbcopy
+cat ./drone/.ssh/secret.key | pbcopy
 
 # GH_PAGES_KEY
 printf "Add secret from \033[0;31mclipboard\033[0m with label \033[0;31mGH_PAGES_KEY\033[0m to drone.\n"
 
 # delete symmetric key
-rm -f secret.key
+# rm -f secret.key
 
 # ignore private key for git !!!
 # make sure there is a .gitignore
 touch .gitignore
 echo 'drone/.ssh/id_rsa' >> .gitignore
+echo 'drone/.ssh/secret.key' >> .gitignore
 
 # add all the files
 git add -A ./drone/.ssh/id_rsa.enc
@@ -57,8 +58,37 @@ git commit -m "ADD: build system for Travis CI"
 
 # install deploy key
 # -----------------------------------------------------------------------------
-# add deploy (cat ./drone/.ssh/id_rsa.pub) key to https://github.com/<user>/<repo>/settings/keys
+# add deploy key to https://github.com/<user>/<repo>/settings/keys
+# cat ./drone/.ssh/id_rsa.pub | pbcopy
+
 ```
+
+## Additional config
+
+Add specific branches:
+
+```diff
+    ...
+    environment:
+      ...
++     SOURCE_BRANCH: "master"
++     TARGET_BRANCH: "gh-pages"
+```
+
+Init submodules
+
+```diff
+
+steps:
++ - name: submodules
++   image: docker:git
++   commands:
++     - git submodule update --init --recursive --remote
+
+  - name: build
+    ...
+```
+
 
 ### Thanks for inspiration
 
