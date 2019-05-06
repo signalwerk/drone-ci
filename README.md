@@ -89,6 +89,33 @@ steps:
     ...
 ```
 
+## Deploy to FTP
+
+```shell
+curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/drone/lftp.sh > ./drone/lftp.sh
+```
+
+
+```diff
+
+steps:
++ - name: deploy-ftp
++   image: signalwerk/lftp:latest
++   commands:
++     - bash ./drone/lftp.sh pull
++   environment:
++     FTP_SERVER: myServer
++     FTP_USER: myUser
++     FTP_PASSWORD: myPassword
++     FTP_LOCAL_DIR: /myLocal
++     FTP_REMOTE_DIR: /myRemote
++   when:
++     branch:
++       - master
+
+  - name: build
+    ...
+```
 
 ### Thanks for inspiration
 
