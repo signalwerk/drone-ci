@@ -34,7 +34,7 @@ openssl aes-256-cbc -md md5 -in ./drone/.ssh/id_rsa -out ./drone/.ssh/id_rsa.enc
 # copy key to clipboard
 cat ./drone/.ssh/secret.key | pbcopy
 
-# GH_PAGES_KEY
+# Add GH_PAGES_KEY secret
 printf "Add secret from \033[0;31mclipboard\033[0m with label \033[0;31mGH_PAGES_KEY\033[0m to drone.\n"
 
 # delete symmetric key
