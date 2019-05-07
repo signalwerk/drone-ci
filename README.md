@@ -54,7 +54,7 @@ git add -A ./drone/build.sh
 git add -A ./drone/gh-pages.sh
 git add -A ./.gitignore
 
-git commit -m "ADD: build system for Travis CI"
+git commit -m "ADD: build system for Drone CI"
 
 # install deploy key
 # -----------------------------------------------------------------------------
