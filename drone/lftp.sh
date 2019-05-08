@@ -50,7 +50,7 @@ getDir () {
 	$FTP_INIT \
 	lcd '${FTP_LOCAL_DIR}'; \
 	cd '${FTP_REMOTE_DIR}'; \
-	mirror --verbose=8 --parallel=${FTP_PARALLEL} --exclude-glob .git $FTP_EXCLUDES --delete; \
+	mirror --verbose=8 --parallel=${FTP_PARALLEL} --exclude-glob node_modules --exclude-glob .git $FTP_EXCLUDES --delete; \
 	quit; \
 	" "${FTP_SERVER}"
 }
@@ -61,7 +61,7 @@ pushDir () {
 	$FTP_INIT \
 	lcd '${FTP_LOCAL_DIR}'; \
 	cd '${FTP_REMOTE_DIR}'; \
-	mirror --reverse --verbose=8 --parallel=${FTP_PARALLEL} --exclude-glob .git $FTP_EXCLUDES; \
+	mirror --reverse --verbose=8 --parallel=${FTP_PARALLEL} --exclude-glob node_modules --exclude-glob .git $FTP_EXCLUDES; \
 	quit; \
 	" "${FTP_SERVER}"
 }
