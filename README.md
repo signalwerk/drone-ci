@@ -107,7 +107,7 @@ steps:
 +     FTP_SERVER: myServer
 +     FTP_USER: myUser
 +     FTP_PASSWORD: myPassword
-+     FTP_LOCAL_DIR: /myLocal
++     FTP_LOCAL_DIR: ./myLocal
 +     FTP_REMOTE_DIR: /myRemote
 +   when:
 +     branch:
