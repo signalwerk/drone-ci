@@ -82,9 +82,9 @@ git add -A .
 git commit -m "Deploy to GitHub Pages: ${SHA}"
 
 # Get the deploy key by using stored variables to decrypt id_rsa.enc
-# md5 set to have openssl 1 & 2 compatibility
+# sha256 set to have openssl 1 & 2 compatibility
 eval `ssh-agent -s`
-openssl aes-256-cbc -md md5 -d -in "$ROOT_DIR/drone/.ssh/id_rsa.enc" -pass "pass:$DECRYPT_KEY" | ssh-add -
+openssl aes-256-cbc -md sha256 -d -in "$ROOT_DIR/drone/.ssh/id_rsa.enc" -pass "pass:$DECRYPT_KEY" | ssh-add -
 
 # add github as known host
 mkdir -p ~/.ssh
