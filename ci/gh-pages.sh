@@ -32,10 +32,23 @@ openssl version
 
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
-if [ "$DRONE_BUILD_EVENT" != "push" -o "$DRONE_COMMIT_BRANCH" != "$SOURCE_BRANCH" ]; then
-    echo "Skipping deploy; just doing a build."
-    exit 0
+if [ $DRONE ]; then
+  if [ "$DRONE_BUILD_EVENT" != "push" -o "$DRONE_COMMIT_BRANCH" != "$SOURCE_BRANCH" ]; then
+      echo "Skipping deploy; just doing a build."
+      exit 0
+  fi
 fi
+
+# Pull requests and commits to other branches shouldn't try to deploy, just build to verify
+if [ $TRAVIS ]; then
+  if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]; then
+      echo "Skipping deploy; just doing a build."
+      exit 0
+  fi
+fi
+
+
+
 
 # Clone the existing gh-pages for this repo into $DEPLOY_DIR/
 # Create a new empty branch if gh-pages doesn't exist yet (should only happen on first deply)
@@ -55,7 +68,7 @@ mkdir -p $DEPLOY_DIR
 
 # Run our compile script
 echo "   * build"
-sh ./drone/build.sh
+sh ./ci/build.sh
 
 # restore git
 cd $ROOT_DIR
