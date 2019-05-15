@@ -9,7 +9,7 @@ steps:
       - bash ./ci/gh-pages.sh
     environment:
       DECRYPT_KEY:
-        from_secret: "GH_PAGES_KEY"
+        from_secret: "DECRYPT_KEY"
       COMMIT_AUTHOR_EMAIL: "sh@signalwerk.ch"
       DEPLOY_DIR: "build"
     when:
