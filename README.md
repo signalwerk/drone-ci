@@ -18,9 +18,9 @@ ssh-keygen -t rsa -b 4096 -C "sh@signalwerk.ch" -f ./ci/.ssh/id_rsa
 
 # get the required scripts
 curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/.drone.yml > .drone.yml
-curl https://raw.githubusercontent.com/signalwerk/travis-ci/master/.travis.yml > .travis.yml
-curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/drone/build.sh > ./ci/build.sh
-curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/drone/gh-pages.sh > ./ci/gh-pages.sh
+curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/.travis.yml > .travis.yml
+curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/ci/build.sh > ./ci/build.sh
+curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/ci/gh-pages.sh > ./ci/gh-pages.sh
 
 # encrypt the private key with ssh
 
@@ -94,7 +94,7 @@ steps:
 ## Deploy to FTP
 
 ```shell
-curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/drone/lftp.sh > ./drone/lftp.sh
+curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/ci/lftp.sh > ./ci/lftp.sh
 ```
 
 
@@ -104,7 +104,7 @@ steps:
 + - name: deploy-ftp
 +   image: signalwerk/lftp:latest
 +   commands:
-+     - bash ./drone/lftp.sh pull
++     - bash ./ci/lftp.sh pull
 +   environment:
 +     FTP_SERVER: myServer
 +     FTP_USER: myUser
