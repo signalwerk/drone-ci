@@ -22,8 +22,6 @@ echo "     – TARGET_BRANCH=${TARGET_BRANCH}"
 echo "     – DEPLOY_DIR=${DEPLOY_DIR}"
 echo "     – COMMIT_AUTHOR_EMAIL=${COMMIT_AUTHOR_EMAIL}"
 echo "     – REPO=${REPO}"
-echo "     – DRONE_BUILD_EVENT=${DRONE_BUILD_EVENT}"
-echo "     – DRONE_COMMIT_BRANCH=${DRONE_COMMIT_BRANCH}"
 echo "     – REPO=${REPO}"
 echo "     – SSH_REPO=${SSH_REPO}"
 echo "     – SHA=${SHA}"
@@ -33,6 +31,10 @@ openssl version
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
 if [ $DRONE ]; then
+
+  echo "     – DRONE_BUILD_EVENT=${DRONE_BUILD_EVENT}"
+  echo "     – DRONE_COMMIT_BRANCH=${DRONE_COMMIT_BRANCH}"
+
   if [ "$DRONE_BUILD_EVENT" != "push" -o "$DRONE_COMMIT_BRANCH" != "$SOURCE_BRANCH" ]; then
       echo "Skipping deploy; just doing a build."
       exit 0
@@ -41,6 +43,10 @@ fi
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
 if [ $TRAVIS ]; then
+
+  echo "     – TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}"
+  echo "     – TRAVIS_BRANCH=${TRAVIS_BRANCH}"
+
   if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]; then
       echo "Skipping deploy; just doing a build."
       exit 0
@@ -80,7 +86,7 @@ rm -rf __save_git
 cd $DEPLOY_DIR
 echo "   * build info"
 
-git config user.name "DRONE CI"
+git config user.name "CI System"
 git config user.email "$COMMIT_AUTHOR_EMAIL"
 
 # If there are no changes to the compiled out (e.g. this is a README update) then just bail.
@@ -97,7 +103,7 @@ git commit -m "Deploy to GitHub Pages: ${SHA}"
 # Get the deploy key by using stored variables to decrypt id_rsa.enc
 # sha256 set to have openssl 1 & 2 compatibility
 eval `ssh-agent -s`
-openssl aes-256-cbc -md sha256 -d -in "$ROOT_DIR/drone/.ssh/id_rsa.enc" -pass "pass:$DECRYPT_KEY" | ssh-add -
+openssl aes-256-cbc -md sha256 -d -in "$ROOT_DIR/ci/.ssh/id_rsa.enc" -pass "pass:$DECRYPT_KEY" | ssh-add -
 
 # add github as known host
 mkdir -p ~/.ssh
