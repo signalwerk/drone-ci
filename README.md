@@ -29,8 +29,8 @@ curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/ci/gh-pages.sh
 openssl rand -hex 64 | tr -d '\n' > ./ci/.ssh/secret.key
 
 
-# Encrypt file using key - sha256 set to have openssl 1 & 2 compatibility
-openssl aes-256-cbc -md sha256 -in ./ci/.ssh/id_rsa -out ./ci/.ssh/id_rsa.enc -pass file:./ci/.ssh/secret.key
+# Encrypt file using key - md5 set to have openssl 1 & 2 compatibility
+openssl aes-256-cbc -md md5 -in ./ci/.ssh/id_rsa -out ./ci/.ssh/id_rsa.enc -pass file:./ci/.ssh/secret.key
 
 # copy key to clipboard
 cat ./ci/.ssh/secret.key | pbcopy
