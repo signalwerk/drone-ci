@@ -104,7 +104,7 @@ steps:
 + - name: deploy-ftp
 +   image: signalwerk/lftp:latest
 +   commands:
-+     - bash ./ci/lftp.sh pull
++     - bash ./ci/lftp.sh push
 +   environment:
 +     FTP_SERVER: myServer
 +     FTP_USER: myUser
