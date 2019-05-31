@@ -17,8 +17,8 @@ mkdir -p ./ci/.ssh
 ssh-keygen -t rsa -b 4096 -C "sh@signalwerk.ch" -f ./ci/.ssh/id_rsa
 
 # get the required scripts
+# curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/.travis.yml > .travis.yml
 curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/.drone.yml > .drone.yml
-curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/.travis.yml > .travis.yml
 curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/ci/build.sh > ./ci/build.sh
 curl https://raw.githubusercontent.com/signalwerk/drone-ci/master/ci/gh-pages.sh > ./ci/gh-pages.sh
 
@@ -108,7 +108,8 @@ steps:
 +   environment:
 +     FTP_SERVER: myServer
 +     FTP_USER: myUser
-+     FTP_PASSWORD: myPassword
++     FTP_PASSWORD:
++       from_secret: "FTP_PASSWORD"
 +     FTP_LOCAL_DIR: ./myLocal
 +     FTP_REMOTE_DIR: /myRemote
 +   when:
