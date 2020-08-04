@@ -10,7 +10,8 @@ if [ "$1" == "" ]; then
     exit 1
 fi
 
+GIT_HASH="${DRONE_COMMIT:-$(git rev-parse --short HEAD)}"
 
 sed -i "s#\$NOW#$(date '+%Y-%m-%d %H:%M:%S')#" $1
-sed -i "s#\$GIT-HASH#$(git rev-parse --short HEAD)#" $1
+sed -i "s#\$GIT-HASH#$GIT_HASH#" $1
 sed -i "s#\$GIT-DATE#$(git log -1 --date=format:"%Y-%m-%d %H:%M:%S" --format="%ad")#" $1
