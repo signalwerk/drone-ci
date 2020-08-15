@@ -32,11 +32,9 @@ openssl rand -hex 64 | tr -d '\n' > ./ci/.ssh/secret.key
 # Encrypt file using key - sha256 set to have openssl 1 & 2 compatibility
 openssl aes-256-cbc -md sha256 -in ./ci/.ssh/id_rsa -out ./ci/.ssh/id_rsa.enc -pass file:./ci/.ssh/secret.key
 
-# copy key to clipboard
+# copy key to clipboard and add DECRYPT_KEY secret
 cat ./ci/.ssh/secret.key | pbcopy
-
-# Add DECRYPT_KEY secret
-printf "Add secret from \033[0;31mclipboard\033[0m with label \033[0;31mDECRYPT_KEY\033[0m to CI.\n"
+printf "Add secret from clipboard with label DECRYPT_KEY to CI.\n"
 
 # delete symmetric key
 # rm -f secret.key
