@@ -1,6 +1,7 @@
 # CI Script
 
 Scripts to deploy with CI to gh-pages.
+Maybe a GitHub-Action would also be an Option. See an [Example](https://github.com/signalwerk/cv/blob/master/.github/workflows/deploy.yml).
 
 ## Setup
 
