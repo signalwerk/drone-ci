@@ -60,7 +60,9 @@ git commit -m "ADD: build system for CI"
 # install deploy key
 # -----------------------------------------------------------------------------
 # add deploy key to https://github.com/<user>/<repo>/settings/keys
-cat ./ci/.ssh/id_rsa.pub | pbcopy
+# cat ./ci/.ssh/id_rsa.pub | pbcopy
+
+sshpub=`cat ./ci/.ssh/id_rsa.pub` && gh api /repos/{owner}/{repo}/keys -f title='Drone CI' -f key="$sshpub" -f read_only=false
 
 ```
 
