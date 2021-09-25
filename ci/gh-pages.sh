@@ -22,7 +22,6 @@ echo "     – TARGET_BRANCH=${TARGET_BRANCH}"
 echo "     – DEPLOY_DIR=${DEPLOY_DIR}"
 echo "     – COMMIT_AUTHOR_EMAIL=${COMMIT_AUTHOR_EMAIL}"
 echo "     – REPO=${REPO}"
-echo "     – REPO=${REPO}"
 echo "     – SSH_REPO=${SSH_REPO}"
 echo "     – SHA=${SHA}"
 
